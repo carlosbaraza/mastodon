@@ -66,14 +66,21 @@ services:
     healthcheck:
       # prettier-ignore
       test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
-    ports:
-      - '127.0.0.1:3000:3000'
+    # ports:
+    #   - '127.0.0.1:3000:3000'
     depends_on:
       - db
       - redis
       # - es
     volumes:
       - ./public/system:/mastodon/public/system
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`${LOCAL_DOMAIN}`)"
+      - 'traefik.http.routers.portainer.service=mastodon'
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.services.portainer.loadbalancer.server.port=3000"
 
   streaming:
     build: .
