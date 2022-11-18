@@ -77,7 +77,7 @@ services:
       - ./public/system:/mastodon/public/system
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mastodon.rule=Host(`${LOCAL_DOMAIN}`)"
+      - "traefik.http.routers.mastodon.rule=Host(`fintwit1.inpractise.net`)"
       - 'traefik.http.routers.mastodon.service=mastodon'
       - "traefik.http.routers.mastodon.entrypoints=websecure"
       - "traefik.http.routers.mastodon.tls=true"
