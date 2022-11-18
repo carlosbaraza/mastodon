@@ -63,6 +63,7 @@ services:
     networks:
       - external_network
       - internal_network
+      - proxy
     healthcheck:
       # prettier-ignore
       test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
@@ -76,11 +77,11 @@ services:
       - ./public/system:/mastodon/public/system
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`${LOCAL_DOMAIN}`)"
-      - 'traefik.http.routers.portainer.service=mastodon'
-      - "traefik.http.routers.portainer.entrypoints=websecure"
-      - "traefik.http.routers.portainer.tls=true"
-      - "traefik.http.services.portainer.loadbalancer.server.port=3000"
+      - "traefik.http.routers.mastodon.rule=Host(`${LOCAL_DOMAIN}`)"
+      - 'traefik.http.routers.mastodon.service=mastodon'
+      - "traefik.http.routers.mastodon.entrypoints=websecure"
+      - "traefik.http.routers.mastodon.tls=true"
+      - "traefik.http.services.mastodon.loadbalancer.server.port=3000"
 
   streaming:
     # build: .
@@ -135,6 +136,8 @@ services:
   #     - internal_network
 
 networks:
+  proxy:
+    external: true
   external_network:
   internal_network:
     internal: true
