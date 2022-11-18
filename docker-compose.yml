@@ -55,7 +55,7 @@ services:
   #     - '127.0.0.1:9200:9200'
 
   web:
-    build: .
+    # build: .
     image: tootsuite/mastodon
     restart: always
     env_file: .env.production
@@ -83,7 +83,7 @@ services:
       - "traefik.http.services.portainer.loadbalancer.server.port=3000"
 
   streaming:
-    build: .
+    # build: .
     image: tootsuite/mastodon
     restart: always
     env_file: .env.production
@@ -101,7 +101,7 @@ services:
       - redis
 
   sidekiq:
-    build: .
+    # build: .
     image: tootsuite/mastodon
     restart: always
     env_file: .env.production
